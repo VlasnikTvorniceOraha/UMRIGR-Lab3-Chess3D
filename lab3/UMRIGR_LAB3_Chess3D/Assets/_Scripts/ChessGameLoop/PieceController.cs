@@ -14,6 +14,7 @@ namespace ChessMainLoop
         //If user presses anywhere thats not a piece and currently selected piece exists, piece gets deselcted
         private void Update()
         {
+            return;
             if (Input.GetKeyDown(KeyCode.Mouse0) == false || AnyActive == false)
             {
                 return;
