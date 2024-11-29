@@ -37,7 +37,7 @@ public class CameraControl : MonoBehaviour
         
         var movementSpeed = fastMode ? _fastMovementSpeed : this._movementSpeed;
 
-        Debug.Log(move);
+
         Vector3 movementVector = move * movementSpeed * Time.deltaTime;
         //moveDirection = moveDirection * 0.5f;
 

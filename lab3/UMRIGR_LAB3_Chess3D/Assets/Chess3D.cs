@@ -362,6 +362,15 @@ public partial class @Chess3D : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LeftMouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""682cbd06-395a-4ad0-9e4c-b4abd6a619ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -562,6 +571,17 @@ public partial class @Chess3D : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ead5239-59ef-4b44-b722-ca5d47a2638a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -645,6 +665,7 @@ public partial class @Chess3D : IInputActionCollection2, IDisposable
         m_CameraMovement_Mouse = m_CameraMovement.FindAction("Mouse", throwIfNotFound: true);
         m_CameraMovement_RightMouse = m_CameraMovement.FindAction("RightMouse", throwIfNotFound: true);
         m_CameraMovement_Movement = m_CameraMovement.FindAction("Movement", throwIfNotFound: true);
+        m_CameraMovement_LeftMouse = m_CameraMovement.FindAction("LeftMouse", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -762,6 +783,7 @@ public partial class @Chess3D : IInputActionCollection2, IDisposable
     private readonly InputAction m_CameraMovement_Mouse;
     private readonly InputAction m_CameraMovement_RightMouse;
     private readonly InputAction m_CameraMovement_Movement;
+    private readonly InputAction m_CameraMovement_LeftMouse;
     public struct CameraMovementActions
     {
         private @Chess3D m_Wrapper;
@@ -775,6 +797,7 @@ public partial class @Chess3D : IInputActionCollection2, IDisposable
         public InputAction @Mouse => m_Wrapper.m_CameraMovement_Mouse;
         public InputAction @RightMouse => m_Wrapper.m_CameraMovement_RightMouse;
         public InputAction @Movement => m_Wrapper.m_CameraMovement_Movement;
+        public InputAction @LeftMouse => m_Wrapper.m_CameraMovement_LeftMouse;
         public InputActionMap Get() { return m_Wrapper.m_CameraMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -811,6 +834,9 @@ public partial class @Chess3D : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_CameraMovementActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_CameraMovementActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_CameraMovementActionsCallbackInterface.OnMovement;
+                @LeftMouse.started -= m_Wrapper.m_CameraMovementActionsCallbackInterface.OnLeftMouse;
+                @LeftMouse.performed -= m_Wrapper.m_CameraMovementActionsCallbackInterface.OnLeftMouse;
+                @LeftMouse.canceled -= m_Wrapper.m_CameraMovementActionsCallbackInterface.OnLeftMouse;
             }
             m_Wrapper.m_CameraMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -842,6 +868,9 @@ public partial class @Chess3D : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @LeftMouse.started += instance.OnLeftMouse;
+                @LeftMouse.performed += instance.OnLeftMouse;
+                @LeftMouse.canceled += instance.OnLeftMouse;
             }
         }
     }
@@ -908,5 +937,6 @@ public partial class @Chess3D : IInputActionCollection2, IDisposable
         void OnMouse(InputAction.CallbackContext context);
         void OnRightMouse(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnLeftMouse(InputAction.CallbackContext context);
     }
 }

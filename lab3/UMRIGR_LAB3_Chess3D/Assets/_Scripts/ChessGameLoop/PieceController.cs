@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ChessMainLoop
 {
@@ -11,15 +12,17 @@ namespace ChessMainLoop
 
         public static event PieceMoved PieceMoved;
 
+        bool leftMouse = false;
+
         //If user presses anywhere thats not a piece and currently selected piece exists, piece gets deselcted
         private void Update()
         {
-            return;
-            if (Input.GetKeyDown(KeyCode.Mouse0) == false || AnyActive == false)
+            
+            if (leftMouse == false || AnyActive == false)
             {
                 return;
             }
-
+            Debug.Log(leftMouse);
             RaycastHit hit;
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
@@ -47,6 +50,19 @@ namespace ChessMainLoop
         {
             Piece.Selected -= PieceSelected;
             PathPiece.PathSelect -= PathSelected;
+        }
+
+        public void leftMousePressed(InputAction.CallbackContext context)
+        {
+            Debug.Log("Kurac");
+            if (context.phase == InputActionPhase.Started)
+            {
+                leftMouse = true;
+            }
+            else if (context.phase == InputActionPhase.Canceled)
+            {
+                leftMouse = false;
+            }
         }
 
         /// <summary>
